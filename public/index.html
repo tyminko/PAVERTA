@@ -1,89 +1,212 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/10.6.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/10.6.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/10.6.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/10.6.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/10.6.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/10.6.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/10.6.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/10.6.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/10.6.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/10.6.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+<html lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-colors.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <template id="logo-template">
+  <div class="logo">
+    <svg class="logo-pavetra" width="100%" height="100%" viewBox="0 0 1241 296" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
+      style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+      <g transform="matrix(1,0,0,1,-5726.84,-837.152)">
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,-0.0500697,0.500697,6853.64,659.14)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,0.0500697,0.500697,6878.87,659.14)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.200279,1.22635e-17,7110.16,740.63)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.260362,1.59426e-17,7148.17,917.795)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,0,0.500697,6630.04,659.14)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-0.0224405,1.09927e-18,-0.100139,-0.300418,7016.35,1225.05)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,0,0.300418,6748.15,726.799)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.300418,1.83953e-17,6996.35,740.63)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.300418,1.83953e-17,6996.35,858.74)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,0,0.500697,6511.93,659.14)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.300418,1.83953e-17,6819.19,740.63)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.300418,1.83953e-17,6642.02,740.63)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.300418,1.83953e-17,6642.02,858.74)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.300418,1.83953e-17,6642.02,976.85)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-0.0224405,0,0.0500697,-0.500697,6404.58,1292.71)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-0.0224405,0,-0.0500697,-0.500697,6379.36,1292.71)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-6.2921e-19,-0.0224405,0.200279,-1.72495e-17,6148.07,1211.22)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,0,0.500697,6275.71,659.14)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,-0.0500697,0.500697,5967.82,659.14)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,0.0500697,0.500697,5993.04,659.14)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.200279,1.22635e-17,6224.33,740.63)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.25992,1.59155e-17,6262.07,917.795)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,0,0.500697,5744.21,659.14)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,0,0.300418,5862.32,726.799)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.300418,1.83953e-17,6110.52,740.63)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.300418,1.83953e-17,6110.52,858.74)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" />
+          </g>
+        </g>
+      </g>
+    </svg>
+    <svg class="logo-art" width="100%" height="100%" viewBox="0 0 532 296" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
+      style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+      <g transform="matrix(1,0,0,1,-6218.27,-1696.6)">
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-1.37408e-18,0.0224405,0.300418,1.83953e-17,6576.15,1600.08)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(255,1,43);fill-opacity:0.7;" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-0.0224405,0,1.2326e-32,0.500697,6883.41,1518.59)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(255,1,1);fill-opacity:0.7;" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,0,0.500697,6412.81,1518.59)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(255,1,255);fill-opacity:0.7;" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-0.0224405,1.20198e-18,-0.100139,-0.300418,6799.13,2084.51)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(255,1,86);fill-opacity:0.7;" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(0.0224405,0,0,0.300418,6530.92,1586.25)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(255,1,170);fill-opacity:0.7;" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.300418,1.83953e-17,6779.13,1600.08)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(255,1,213);fill-opacity:0.7;" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(1.37408e-18,0.0224405,-0.300418,1.83953e-17,6779.13,1718.19)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(255,1,128);fill-opacity:0.7;" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-0.0224405,0,0.0500697,0.500697,6541.69,1518.59)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(170,1,255);fill-opacity:0.7;" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-0.0224405,0,-0.0500697,0.500697,6516.46,1518.59)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(86,1,255);fill-opacity:0.7;" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-1.37408e-18,0.0224405,0.200279,1.22635e-17,6285.17,1600.08)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(128,1,255);fill-opacity:0.7;" />
+          </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-105.032,8.86321)">
+          <g transform="matrix(-1.37408e-18,0.0224405,0.260362,1.59426e-17,6247.16,1777.25)">
+            <rect x="3906.3" y="337.828" width="2631.63" height="589.729" style="fill:rgb(213,1,255);fill-opacity:0.7;" />
+          </g>
+        </g>
+      </g>
+    </svg>
+  </div>
+  </template>
+</body>
 </html>
