@@ -8,6 +8,6 @@ function addLogo (className) {
   document.body.appendChild(clone)
 }
 
-addLogo('small')
+// addLogo('small')
 addLogo('large')
-addLogo('bw')
+// addLogo('bw')
