@@ -1,0 +1,89 @@
+
+body {
+  margin: 3rem;
+  display: grid;
+}
+
+svg rect {
+  mix-blend-mode: multiply;
+}
+
+@property --spinAngle {
+  /* An initial value for our custom property */
+  initial-value: 0deg;
+  /* Whether it inherits from parent set values or not */
+  inherits: false;
+  /* The type. Yes, the type. You thought TypeScript was cool */
+  syntax: '<angle>';
+}
+
+.logo {
+  --logo-line-height: var(--size-base, 8rem);
+  --logo-art-angle: 193deg;
+  --logo-art-shift-Y: 0px;
+  --logo-art-shift-X: 0px;
+  position: relative;
+  width: fit-content;
+  height: calc(var(--logo-line-height) * 2);
+  margin: auto;
+  & > * {
+    position: relative;
+    display: block;
+    width: fit-content;
+    height: var(--logo-line-height);
+    align-items: flex-end;
+  }
+  .logo-art {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transform-origin: bottom left;
+    transform: translate(var(--logo-art-shift-X), var(--logo-art-shift-Y)) rotate(var(--logo-art-angle));
+    z-index: -1;
+    opacity: 1;
+  }
+  &.small {
+    --logo-line-height: 4rem;
+    --logo-art-angle: 180deg;
+    filter: brightness(0.8);
+    .logo-art {
+      opacity: 0.8;
+    }
+  }
+  &.large {
+    --logo-art-angle: var(--spinAngle);
+    animation: spin 1s infinite ease-in-out alternate;
+    perspective: 1000px;
+    height: var(--logo-line-height);
+    aspect-ratio: 30 / 5;
+    .logo-art {
+      left: unset;
+      right: 0%;
+      transform: translate(var(--logo-art-shift-X), var(--logo-art-shift-Y)) rotate3D(1,0,0,var(--logo-art-angle));
+    }
+  }
+  &.bw {
+    filter: brightness(0.51) saturate(0);
+    --logo-art-shift-Y: calc(var(--logo-line-height) * -1);
+    --logo-art-angle: 90deg;
+    left: calc(var(--logo-line-height) / -2);
+  }
+}
+
+@keyframes swing {
+  from {
+    --spinAngle: 180deg;
+  }
+  to {
+    --spinAngle: 198deg;
+  }
+}
+
+@keyframes spin {
+  from {
+      --spinAngle: 20deg;
+    }
+  to {
+    --spinAngle: -40deg;
+  }
+}

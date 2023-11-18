@@ -1,0 +1,7 @@
+$colors: #EB8F00, #C44802, #038DF5, #91f038, #D4D938, #F35300, #B92300, #97D0DF, #B6AE9A, #A39E08, #ff34b8;
+
+@for $i from 1 through 40 {
+  svg>g>g:nth-child(#{$i}) rect {
+    fill: nth($colors, random(length($colors)));
+  }
+}
