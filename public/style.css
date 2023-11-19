@@ -1,5 +1,5 @@
 body {
-  margin: 3rem;
+  margin: clamp(1rem, 3vw, 3rem);
   display: grid;
 }
 
@@ -16,7 +16,7 @@ svg rect {
   syntax: "<angle>";
 }
 .logo {
-  --logo-line-height: var(--size-base, 8rem);
+  --logo-line-height: clamp(1rem, 13vw, var(--size-base, 8rem));
   --logo-art-angle: 193deg;
   --logo-art-shift-Y: 0px;
   --logo-art-shift-X: 0px;
