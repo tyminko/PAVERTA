@@ -1,7 +1,212 @@
 $colors: #EB8F00, #C44802, #038DF5, #91f038, #D4D938, #F35300, #B92300, #97D0DF, #B6AE9A, #A39E08, #ff34b8;
 
-@for $i from 1 through 40 {
-  svg>g>g:nth-child(#{$i}) rect {
-    fill: nth($colors, random(length($colors)));
+@function random-color() {
+  @return nth($colors, random(length($colors)));
+}
+
+@mixin random-bg-color {
+  background-color: random-color();
+}
+
+button {
+  background-color: color-mix(in lab, random-color(), white 50%);
+  transition: background-color 0.2s;
+  &:hover, &:focus-visible {
+    background-color: random-color();
   }
+}
+
+// @for $i from 1 through 40 {
+//   svg>g>g:nth-child(#{$i}) rect {
+//     fill: nth($colors, random(length($colors)));
+//   }
+// }
+// $transition-duration: 3s; // Adjust as needed
+// $total-duration: $transition-duration * length($colors);
+// $lighten-amount: 80%; // Percentage of white to mix in
+
+// @function lighten-color($color, $amount) {
+//   @return mix(white, $color, $amount);
+// }
+
+// $lightened-colors: ();
+// @each $color in $colors {
+//   $lightened-colors: append($lightened-colors, lighten-color($color, $lighten-amount), comma);
+// }
+
+// body {
+//   background-color: nth($lightened-colors, 1);
+//   transition: background-color $transition-duration linear;
+// }
+
+// @keyframes colorChange {
+//   @for $i from 1 through length($lightened-colors) {
+//     #{($i - 1) / length($lightened-colors) * 100%} {
+//       background-color: nth($lightened-colors, $i);
+//     }
+//   }
+// }
+
+// body {
+//   animation: colorChange $total-duration infinite;
+// }
+
+svg > g > g:nth-child(1) rect {
+  fill: #97D0DF;
+}
+
+svg > g > g:nth-child(2) rect {
+  fill: #EB8F00;
+}
+
+svg > g > g:nth-child(3) rect {
+  fill: #C44802;
+}
+
+svg > g > g:nth-child(4) rect {
+  fill: #F35300;
+}
+
+svg > g > g:nth-child(5) rect {
+  fill: #ff34b8;
+}
+
+svg > g > g:nth-child(6) rect {
+  fill: #F35300;
+}
+
+svg > g > g:nth-child(7) rect {
+  fill: #F35300;
+}
+
+svg > g > g:nth-child(8) rect {
+  fill: #B92300;
+}
+
+svg > g > g:nth-child(9) rect {
+  fill: #91f038;
+}
+
+svg > g > g:nth-child(10) rect {
+  fill: #038DF5;
+}
+
+svg > g > g:nth-child(11) rect {
+  fill: #038DF5;
+}
+
+svg > g > g:nth-child(12) rect {
+  fill: #C44802;
+}
+
+svg > g > g:nth-child(13) rect {
+  fill: #91f038;
+}
+
+svg > g > g:nth-child(14) rect {
+  fill: #EB8F00;
+}
+
+svg > g > g:nth-child(15) rect {
+  fill: #038DF5;
+}
+
+svg > g > g:nth-child(16) rect {
+  fill: #97D0DF;
+}
+
+svg > g > g:nth-child(17) rect {
+  fill: #038DF5;
+}
+
+svg > g > g:nth-child(18) rect {
+  fill: #038DF5;
+}
+
+svg > g > g:nth-child(19) rect {
+  fill: #038DF5;
+}
+
+svg > g > g:nth-child(20) rect {
+  fill: #ff34b8;
+}
+
+svg > g > g:nth-child(21) rect {
+  fill: #C44802;
+}
+
+svg > g > g:nth-child(22) rect {
+  fill: #F35300;
+}
+
+svg > g > g:nth-child(23) rect {
+  fill: #EB8F00;
+}
+
+svg > g > g:nth-child(24) rect {
+  fill: #97D0DF;
+}
+
+svg > g > g:nth-child(25) rect {
+  fill: #ff34b8;
+}
+
+svg > g > g:nth-child(26) rect {
+  fill: #B6AE9A;
+}
+
+svg > g > g:nth-child(27) rect {
+  fill: #F35300;
+}
+
+svg > g > g:nth-child(28) rect {
+  fill: #B6AE9A;
+}
+
+svg > g > g:nth-child(29) rect {
+  fill: #C44802;
+}
+
+svg > g > g:nth-child(30) rect {
+  fill: #B6AE9A;
+}
+
+svg > g > g:nth-child(31) rect {
+  fill: #97D0DF;
+}
+
+svg > g > g:nth-child(32) rect {
+  fill: #ff34b8;
+}
+
+svg > g > g:nth-child(33) rect {
+  fill: #C44802;
+}
+
+svg > g > g:nth-child(34) rect {
+  fill: #C44802;
+}
+
+svg > g > g:nth-child(35) rect {
+  fill: #B92300;
+}
+
+svg > g > g:nth-child(36) rect {
+  fill: #ff34b8;
+}
+
+svg > g > g:nth-child(37) rect {
+  fill: #B92300;
+}
+
+svg > g > g:nth-child(38) rect {
+  fill: #97D0DF;
+}
+
+svg > g > g:nth-child(39) rect {
+  fill: #D4D938;
+}
+
+svg > g > g:nth-child(40) rect {
+  fill: #97D0DF;
 }

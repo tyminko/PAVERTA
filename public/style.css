@@ -1,10 +1,33 @@
 body {
-  margin: clamp(1rem, 3vw, 3rem);
-  display: grid;
+  --m: clamp(1rem, 3vw, 3rem);
+  margin: var(--m);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.4;
+}
+body > * {
+  box-sizing: border-box;
 }
 
 svg rect {
   mix-blend-mode: multiply;
+}
+
+button {
+  border: none;
+  font-size: inherit;
+  min-width: 2rem;
+  min-height: 2rem;
+  cursor: pointer;
+}
+
+footer {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 80%;
+}
+footer > button {
+  background-color: transparent;
 }
 
 @property --spinAngle {
@@ -15,33 +38,47 @@ svg rect {
   /* The type. Yes, the type. You thought TypeScript was cool */
   syntax: "<angle>";
 }
+.card {
+  width: min(100%, 60ch);
+  margin-inline: auto;
+  text-wrap: balance;
+}
+.card h1 {
+  margin-top: 2rem;
+}
+.card .desc {
+  font-weight: normal;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
 .logo {
-  --logo-line-height: clamp(1rem, 13vw, var(--size-base, 8rem));
+  --logo-width: min(100%, 60ch);
   --logo-art-angle: 193deg;
   --logo-art-shift-Y: 0px;
   --logo-art-shift-X: 0px;
   position: relative;
-  width: -moz-fit-content;
-  width: fit-content;
-  height: calc(var(--logo-line-height) * 2);
+  width: var(--logo-width);
   margin: auto;
+  mix-blend-mode: multiply;
+  display: flex;
 }
 .logo > * {
   position: relative;
-  display: block;
-  width: -moz-fit-content;
-  width: fit-content;
-  height: var(--logo-line-height);
+  display: flex;
   align-items: flex-end;
+  flex-basis: 70%;
+  flex-shrink: 0;
 }
 .logo .logo-art {
-  position: absolute;
-  top: 0;
-  left: 100%;
   transform-origin: bottom left;
   transform: translate(var(--logo-art-shift-X), var(--logo-art-shift-Y)) rotate(var(--logo-art-angle));
   z-index: -1;
   opacity: 1;
+  flex-basis: 30%;
+  flex-shrink: 1;
 }
 .logo.small {
   --logo-line-height: 4rem;
@@ -55,12 +92,8 @@ svg rect {
   --logo-art-angle: var(--spinAngle);
   animation: spin 1s infinite ease-in-out alternate;
   perspective: 1000px;
-  height: var(--logo-line-height);
-  aspect-ratio: 30/5;
 }
 .logo.large .logo-art {
-  left: unset;
-  right: 0%;
   transform: translate(var(--logo-art-shift-X), var(--logo-art-shift-Y)) rotate3D(1, 0, 0, var(--logo-art-angle));
 }
 .logo.bw {
@@ -68,6 +101,36 @@ svg rect {
   --logo-art-shift-Y: calc(var(--logo-line-height) * -1);
   --logo-art-angle: 90deg;
   left: calc(var(--logo-line-height) / -2);
+}
+
+.impressum {
+  font-size: 80%;
+  position: fixed;
+  z-index: 2000;
+  width: min(100% - 2rem, 60ch);
+  min-height: -moz-fit-content;
+  min-height: fit-content;
+  max-height: calc(100svh - 4rem);
+  overflow-y: auto;
+  bottom: 3rem;
+  left: 1rem;
+  text-wrap: pretty;
+  padding: 0 1.5rem 2rem;
+  background-color: rgba(235, 235, 235, 0.9490196078);
+}
+.impressum.closed {
+  display: none;
+}
+.impressum header {
+  position: sticky;
+  top: 0;
+  margin: 0 -1.5rem -1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.impressum button.close {
+  font-size: 200%;
+  right: 0;
 }
 
 @keyframes swing {

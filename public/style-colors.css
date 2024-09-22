@@ -1,3 +1,11 @@
+button {
+  background-color: color-mix(in lab, #91f038, white 50%);
+  transition: background-color 0.2s;
+}
+button:hover, button:focus-visible {
+  background-color: #D4D938;
+}
+
 svg > g > g:nth-child(1) rect {
   fill: #97D0DF;
 }
