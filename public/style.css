@@ -146,7 +146,15 @@ footer {
   .role:after {
     content: ':';
   }
-
+  &.person {
+    .role {
+      font-size: 80%;
+      display: block;
+      &:after {
+        content: none;
+      }
+    }
+  }
 }
 .imprint {
   font-size: 80%;
