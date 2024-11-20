@@ -1,11 +1,74 @@
-body {
+@property --spinAngle {
+  /* An initial value for our custom property */
+  initial-value: 0deg;
+  /* Whether it inherits from parent set values or not */
+  inherits: false;
+  /* The type. Yes, the type. You thought TypeScript was cool */
+  syntax: '<angle>';
+}
+
+:root {
+  --padding-body: clamp(1rem, 2vw, 2rem);
+  --padding: 1rem;
+  --nav-offset: 0.5rem;
+  --logo-w: min(100vw - var(--padding-body), 40rem);
+  --logo-h: calc(var(--logo-w) / ((1241 + 532) / 296));
+  --menu-top: calc(var(--padding-body) + var(--logo-h) + var(--padding));
+  --menu-h: 0rem;
+  --menu-title-h: 3rem; 
+  --header-h: calc(var(--logo-h) + var(--nav-offset) + var(--menu-h) + var(--menu-title-h));
+  --logo-art-angle: 193deg;
   --m: clamp(1rem, 3vw, 3rem);
-  margin: var(--m);
+}
+html {
+  /* display: grid; */
+  min-height: 100svh;
+  /* place-content: center; */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* padding-block: var(--padding-body); */
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.4;
+  /* height: fit-content; */
+  overflow: auto;
+
+  & * {
+    box-sizing: border-box;
+  }
 }
-body > * {
-  box-sizing: border-box;
+
+header {
+  position: fixed;
+  z-index: 1000;
+
+  nav {
+    margin-top: var(--nav-offset);
+  }
+}
+
+main {
+  /* padding-top: calc(var(--header-h)); */
+  /* padding-bottom: 3rem; */
+  /* height: 100vh; */
+  /* overflow: auto; */
+}
+
+h1, h2, h3 {
+  font-weight: normal;
+  width: fit-content;
+}
+
+h1, h2 {
+  text-transform: uppercase;
+}
+
+h1 {
+  span {
+    text-transform: uppercase;
+  }
 }
 
 svg rect {
@@ -18,6 +81,10 @@ button {
   min-width: 2rem;
   min-height: 2rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
 }
 
 footer {
@@ -25,82 +92,116 @@ footer {
   bottom: 1rem;
   left: 1rem;
   font-size: 80%;
-}
-footer > button {
-  background-color: transparent;
+
+  & > button {
+    background-color: transparent;
+  }
 }
 
-@property --spinAngle {
-  /* An initial value for our custom property */
-  initial-value: 0deg;
-  /* Whether it inherits from parent set values or not */
-  inherits: false;
-  /* The type. Yes, the type. You thought TypeScript was cool */
-  syntax: "<angle>";
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1rem;
+
+  .card {
+    width: auto;
+  }
 }
+
 .card {
-  width: min(100%, 60ch);
-  margin-inline: auto;
+  position: relative;
+  width: min(100%, 45ch);
   text-wrap: balance;
-}
-.card h1 {
-  margin-top: 2rem;
-}
-.card .desc {
-  font-weight: normal;
-}
+  padding: 1rem;
+  /* perspective: 1000px; */
 
+  /* h2 {
+    margin-top: 2rem;
+  } */
+
+  img {
+    display: block;
+    width: 7rem;
+  }
+  
+  .desc {
+    font-weight: normal;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 100%;
+    height: 100%;
+    /* background: radial-gradient(closest-side, white, transparent); */
+    z-index: -1;
+    /* width: calc(100% + 2rem); */
+    background: #FFFFFFDC;
+    /* backdrop-filter: blur(10px); */
+    /* transform: skew(3deg, 3deg); */
+  }
+  &:hover:after {
+    /* transform: skew(3deg, 3deg) rotate3D(1,0,0,var(--spinAngle)); */
+    /* animation: spin 5s infinite ease-in-out alternate; */
+  }
+}
 .uppercase {
   text-transform: uppercase;
 }
 
 .logo {
-  --logo-width: min(100%, 60ch);
   --logo-art-angle: 193deg;
   --logo-art-shift-Y: 0px;
   --logo-art-shift-X: 0px;
   position: relative;
-  width: var(--logo-width);
-  margin: auto;
-  mix-blend-mode: multiply;
+  width: var(--logo-w);
+  position: sticky;
+  top: 0; /* var(--padding-body); */
+  z-index: 1000;
+  /* margin: auto; */
+  /* mix-blend-mode: multiply; */
   display: flex;
-}
-.logo > * {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  flex-basis: 70%;
-  flex-shrink: 0;
-}
-.logo .logo-art {
-  transform-origin: bottom left;
-  transform: translate(var(--logo-art-shift-X), var(--logo-art-shift-Y)) rotate(var(--logo-art-angle));
-  z-index: -1;
-  opacity: 1;
-  flex-basis: 30%;
-  flex-shrink: 1;
-}
-.logo.small {
-  --logo-line-height: 4rem;
-  --logo-art-angle: 180deg;
-  filter: brightness(0.8);
-}
-.logo.small .logo-art {
-  opacity: 0.8;
-}
-.logo.large {
-  --logo-art-angle: var(--spinAngle);
-  animation: spin 1s infinite ease-in-out alternate;
-  perspective: 1000px;
-}
-.logo.large .logo-art {
-  transform: translate(var(--logo-art-shift-X), var(--logo-art-shift-Y)) rotate3D(1, 0, 0, var(--logo-art-angle));
-}
-.logo.bw {
-  filter: brightness(0.51) saturate(0);
-  --logo-art-shift-Y: calc(var(--logo-line-height) * -1);
-  --logo-art-angle: 90deg;
-  left: calc(var(--logo-line-height) / -2);
+  
+  & > * {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    flex-basis: 70%;
+    flex-shrink: 0;
+  }
+  .logo-art {
+    transform-origin: bottom left;
+    transform: translate(var(--logo-art-shift-X), var(--logo-art-shift-Y)) rotate(var(--logo-art-angle));
+    z-index: -1;
+    opacity: 1;
+    flex-basis: 30%;
+    flex-shrink: 1;
+  }
+  &.small {
+    --logo-line-height: 4rem;
+    --logo-art-angle: 180deg;
+    filter: brightness(0.8);
+    .logo-art {
+      opacity: 0.8;
+    }
+  }
+  &.large {
+    --logo-art-angle: var(--spinAngle);
+    animation: spin 1s infinite ease-in-out alternate;
+    perspective: 1000px;
+    .logo-art {
+      transform: translate(var(--logo-art-shift-X), var(--logo-art-shift-Y)) rotate3D(1,0,0,var(--logo-art-angle));
+    }
+  }
+  &.bw {
+    filter: brightness(0.51) saturate(0);
+    --logo-art-shift-Y: calc(var(--logo-line-height) * -1);
+    --logo-art-angle: 90deg;
+    left: calc(var(--logo-line-height) / -2);
+  }
 }
 
 .impressum {
@@ -108,29 +209,67 @@ footer > button {
   position: fixed;
   z-index: 2000;
   width: min(100% - 2rem, 60ch);
-  min-height: -moz-fit-content;
-  min-height: fit-content;
   max-height: calc(100svh - 4rem);
   overflow-y: auto;
   bottom: 3rem;
   left: 1rem;
   text-wrap: pretty;
   padding: 0 1.5rem 2rem;
-  background-color: rgba(235, 235, 235, 0.9490196078);
+  background-color: #EBEBEBF2;
+  &.closed {
+    display: none;
+  }
+  & header {
+    position: sticky;
+    top: 0;
+    margin: 0 -1.5rem -1rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+  & button.close {
+    font-size: 200%;
+    right: 0;
+  }
 }
-.impressum.closed {
-  display: none;
+
+.video-bg-box {
+  container-type: size;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  translate: -50% -50%;
+  z-index: -1;
+  filter: contrast(0.2) brightness(1.6);
+
+  .fullscreen {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    height: 100cqb;
+    aspect-ratio: 16 / 9;
+    width: calc(100cqb * (16 / 9));
+    transition: opacity 0.2s;
+
+    @media (aspect-ratio > 16 / 9) {
+      width: 100cqi;
+      height: calc(100cqi / (16 / 9));
+    }
+  }
 }
-.impressum header {
-  position: sticky;
-  top: 0;
-  margin: 0 -1.5rem -1rem;
+.video-bg-tools {
+  position: fixed;
   display: flex;
-  justify-content: flex-end;
-}
-.impressum button.close {
-  font-size: 200%;
-  right: 0;
+  align-items: center;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 80%;
+
+  button {
+    background-color: transparent;
+  }
 }
 
 @keyframes swing {
@@ -141,11 +280,47 @@ footer > button {
     --spinAngle: 198deg;
   }
 }
+
 @keyframes spin {
   from {
-    --spinAngle: 20deg;
-  }
+      --spinAngle: 20deg;
+    }
   to {
     --spinAngle: -40deg;
   }
-}/*# sourceMappingURL=style.css.map */
+}
+
+button.mute-toggle {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M2 16h3.889l5.294 4.332a.5.5 0 0 0 .817-.387V4.055a.5.5 0 0 0-.817-.387L5.89 8H2a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1m21-4c0 3.292-1.446 6.246-3.738 8.262l-1.418-1.418A8.98 8.98 0 0 0 21 12a8.98 8.98 0 0 0-3.155-6.844l1.417-1.418A10.97 10.97 0 0 1 23 12m-5 0a5.99 5.99 0 0 0-2.287-4.713l-1.429 1.429A4 4 0 0 1 16 12c0 1.36-.679 2.561-1.716 3.284l1.43 1.43A5.99 5.99 0 0 0 18 12'/%3E%3C/svg%3E");
+  border-radius: 999px;
+  &.muted {
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387zm14.525-4l3.536 3.536l-1.415 1.414L19 13.414l-3.536 3.536l-1.414-1.414L17.586 12L14.05 8.464l1.414-1.414L19 10.586l3.535-3.536l1.415 1.414z'/%3E%3C/svg%3E");
+  }
+  span {
+    display: block;
+    width: 1.5em;
+    height: 1.5em;
+    background-color: currentColor;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;    
+  }  
+}
+
+:root {
+  --color-1: #EB8F00;
+  --color-2: #C44802;
+  --color-3: #038DF5;
+  --color-4: #91f038;
+  --color-5: #D4D938;
+  --color-6: #F35300;
+  --color-7: #B92300;
+  --color-8: #97D0DF;
+  --color-9: #B6AE9A;
+  --color-10: #A39E08;
+  --color-11: #ff34b8;
+
+}
