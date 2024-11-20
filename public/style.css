@@ -61,7 +61,7 @@ h1, h2, h3 {
   width: fit-content;
 }
 
-h1, h2 {
+h1, h2, h3 {
   text-transform: uppercase;
 }
 
@@ -110,14 +110,9 @@ footer {
 
 .card {
   position: relative;
-  width: min(100%, 45ch);
+  width: min(100%, 45rem);
   text-wrap: balance;
   padding: 1rem;
-  /* perspective: 1000px; */
-
-  /* h2 {
-    margin-top: 2rem;
-  } */
 
   img {
     display: block;
@@ -136,20 +131,34 @@ footer {
     translate: -50% -50%;
     width: 100%;
     height: 100%;
-    /* background: radial-gradient(closest-side, white, transparent); */
     z-index: -1;
-    /* width: calc(100% + 2rem); */
     background: #FFFFFFDC;
-    /* backdrop-filter: blur(10px); */
-    /* transform: skew(3deg, 3deg); */
   }
-  &:hover:after {
-    /* transform: skew(3deg, 3deg) rotate3D(1,0,0,var(--spinAngle)); */
-    /* animation: spin 5s infinite ease-in-out alternate; */
+
+  .date {
+    display: block;
   }
+  .location,
+  .role {
+    font-size: 90%;
+    opacity: 0.6;
+  }
+  .role:after {
+    content: ':';
+  }
+
+}
+.imprint {
+  font-size: 80%;
 }
 .uppercase {
   text-transform: uppercase;
+}
+
+ul.credits {
+  list-style: none;
+  padding: 0;
+
 }
 
 .logo {
@@ -265,10 +274,22 @@ footer {
   align-items: center;
   bottom: 1rem;
   right: 1rem;
-  font-size: 80%;
+  font-size: 100%;
+  z-index: 2000;
 
   button {
-    background-color: transparent;
+    background-color: white;
+    color: var(--color-7);
+    font-size: 1rem;
+
+    &:hover {
+      color: white;
+    }
+
+    &.mute-toggle {
+      height: 2.8rem;
+      width: 2.8rem;
+    }
   }
 }
 
