@@ -110,7 +110,7 @@ footer {
 
 .card {
   position: relative;
-  width: min(100%, 45rem);
+  width: min(100%, 31rem);
   text-wrap: balance;
   padding: 1rem;
 
