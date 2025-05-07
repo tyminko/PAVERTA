@@ -31,6 +31,8 @@ const Vimeo = window.Vimeo
  * @property {Function} toggleMute - Toggles between mute and unmute
  * @property {Function} setMuted - Sets the muted state of the video
  * @property {Function} getPlayer - Returns the underlying Vimeo player instance
+ * @property {Function} addShortcuts  - Adds video playback shortcuts
+ * @property {Function} removeShortcuts - Removes video playback shortcuts
  */
 
 /**
@@ -60,7 +62,6 @@ export function createVimeoPlayer (container, url, options = {}) {
   }
   const playerOptions = { ...defaultPlayerOptions, ...options }
 
-  // State variables
   let player = null
   let isPlaying = false
   let isMuted = playerOptions.autoplay
@@ -68,6 +69,7 @@ export function createVimeoPlayer (container, url, options = {}) {
   let isVideoReady = false
   const videoId = extractVideoId(url)
   const showControls = playerOptions.controls?.playPause || playerOptions.controls?.mute
+  const previewImage = playerContainer.querySelector('img')
   /**
    * @param {string} url
    */
@@ -82,15 +84,11 @@ export function createVimeoPlayer (container, url, options = {}) {
   function init (playerContainer) {
     const previewUrl = playerContainer.querySelector('img')?.src ?? playerOptions.previewUrl
 
-    // Clear container
-    playerContainer.innerHTML = ''
-
     // Create controls container if needed
     if (showControls) {
-      const overflowDiv = document.createElement('div')
-      overflowDiv.className = 'overflow'
       const controlsDiv = document.createElement('div')
       controlsDiv.className = 'controls'
+      controlsDiv.addEventListener('click', togglePlay)
 
       if (playerOptions.controls?.playPause) {
         const playPauseBtn = document.createElement('button')
@@ -130,12 +128,14 @@ export function createVimeoPlayer (container, url, options = {}) {
     player.on('play', () => {
       isPlaying = true
       updatePlayPauseButton()
+      emitPlayToggledEvent(true)
       hidePreviewImage()
     })
 
     player.on('pause', () => {
       isPlaying = false
       updatePlayPauseButton()
+      emitPlayToggledEvent(false)
     })
 
     player.on('loading', () => {
@@ -147,7 +147,6 @@ export function createVimeoPlayer (container, url, options = {}) {
       isLoading = false
       isVideoReady = true
       updateLoadingIndicator()
-      hidePreviewImage()
     })
 
     player.on('volumechange', (data) => {
@@ -156,6 +155,17 @@ export function createVimeoPlayer (container, url, options = {}) {
     })
   }
 
+  /**
+   * @param {boolean} state
+   */
+  function emitPlayToggledEvent (state) {
+    window.dispatchEvent(new CustomEvent('video-play-toggled', {
+      detail: {
+        isPlaying: state,
+        videoId: videoId
+      }
+    }))
+  }
   // Toggle play/pause
   function togglePlay () {
     if (isPlaying) {
@@ -163,20 +173,11 @@ export function createVimeoPlayer (container, url, options = {}) {
     } else {
       player.play()
     }
-    // Dispatch custom event for video playback state change
-    window.dispatchEvent(new CustomEvent('video-play-toggled', {
-      detail: {
-        isPlaying: !isPlaying,
-        videoId: videoId
-      }
-    }))
   }
 
   // Toggle mute/unmute
   function toggleMute () {
     isMuted = !isMuted
-    /* DEBUG */
-    console.log(`%c %c isMuted: `, 'background:#ffbb00;color:#000', 'color:#00aaff', isMuted)
     player.setMuted(isMuted)
   }
 
@@ -206,11 +207,19 @@ export function createVimeoPlayer (container, url, options = {}) {
 
   // Hide preview image
   function hidePreviewImage () {
-    if (isVideoReady && playerOptions.previewUrl) {
-      const previewImage = playerContainer?.querySelector('.preview-image')
-      if (previewImage) {
-        previewImage.classList.add('hidden')
-      }
+    if (previewImage) {
+      previewImage.style.opacity = '0'
+    }
+  }
+
+/**
+ * @param {KeyboardEvent} e 
+ */
+  function shortcuts (e) {
+    if (e.key === ' ') {
+      e.preventDefault()
+      e.stopPropagation()
+      togglePlay()
     }
   }
 
@@ -221,7 +230,13 @@ export function createVimeoPlayer (container, url, options = {}) {
     togglePlay,
     toggleMute,
     setMuted: (muted) => player.setMuted(muted),
-    getPlayer: () => player
+    getPlayer: () => player,
+    addShortcuts: () => {
+      window.addEventListener('keydown', shortcuts)
+    },
+    removeShortcuts: () => {
+      window.removeEventListener('keydown', shortcuts)
+    }
   }
 
   // Initialize the player
@@ -230,3 +245,5 @@ export function createVimeoPlayer (container, url, options = {}) {
   // Return public API
   return api
 }
+
+

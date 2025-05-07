@@ -8,7 +8,7 @@ import { videoPlayers } from './script.js'
 document.addEventListener('DOMContentLoaded', () => {
   const menuToggle = document.querySelector('.menu-toggle')
   const menuItems = document.querySelector('.menu-items')
-  const menuButtons = document.querySelectorAll('.menu-item')
+  const menuButtons = /** @type {NodeListOf<HTMLElement>} */ (document.querySelectorAll('.menu-item'))
   const main = document.querySelector('main')
   const sections = Array.from(main?.querySelectorAll('section') ?? [])
   // /**
@@ -98,18 +98,26 @@ document.addEventListener('DOMContentLoaded', () => {
           autoplay: false,
           controls: {
             playPause: !videoPlayerEl.dataset.chromeless,
-            mute: !videoPlayerEl.dataset.chromeless,
+            mute: false,
           }
         })
       }
     })
     Object.values(videoPlayers).forEach((player, url) => {
+      player.removeShortcuts()
       player.pause()
     })
+    if (videoPlayerEls.length > 0) {
+      const url = Array.from(videoPlayerEls).find(el => el.dataset.url)?.dataset.url
+      if (url) {
+        videoPlayers[url].addShortcuts()
+      }
+    }
   }
 
   menuButtons.forEach((button, index) => {
     button?.style.setProperty('--bg-color', `var(--color-${index + 1})`)
+    sections[index].style.setProperty('--bg-color', `var(--color-${index + 1})`)
     button.addEventListener('click', () => {
       toggleSection(index)
     })

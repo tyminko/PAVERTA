@@ -105,7 +105,6 @@ async function showVolumeToggleButton () {
     updateMuteButtonState(muted);
   }
 }
-
 // @ts-ignore
 window.addEventListener('video-play-toggled', async (/** @type {VideoPlayToggledEvent} */ event) => {
   bgMute = event.detail.isPlaying
