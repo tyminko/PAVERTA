@@ -19,6 +19,8 @@
   --header-h: calc(var(--logo-h) + var(--nav-offset) + var(--menu-h) + var(--menu-title-h));
   --logo-art-angle: 193deg;
   --m: clamp(1rem, 3vw, 3rem);
+  --card-w: min(100%, 31rem);
+  --footer-h: 3rem;
 }
 html {
   /* display: grid; */
@@ -98,6 +100,38 @@ footer {
   }
 }
 
+section:not(:has(.grid)) {
+  display: grid;
+  /* width: min(100%, 31rem); */
+  grid-template-columns: 1fr;
+  place-content: start;
+  
+  .media-view {
+    width: var(--card-w);
+    > * {
+      --page-header-h: var(--header-h, var(--menu-h, 0rem));
+      --page-footer-h: var(--footer-h, 1rem);
+      --_max-h: calc(
+        100svh
+        - var(--page-header-h)
+        - var(--page-footer-h)
+        - var(--media-viewer-footer-h, 0px));
+      position: relative;
+      aspect-ratio: var(--aspect-ratio);
+      width: min(var(--max-media-width, 100cqi), var(--_max-h) * var(--aspect-ratio));
+      background-color: transparent;
+    }
+  }
+
+  @media (min-width: calc(31rem + 500px)) {
+    width: 100%;
+    grid-template-columns: 31rem 1fr;
+    .media-view {
+      width: 100%;
+    }
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -110,7 +144,7 @@ footer {
 
 .card {
   position: relative;
-  width: min(100%, 31rem);
+  width: var(--card-w);
   text-wrap: balance;
   padding: 1rem;
 
@@ -181,6 +215,7 @@ ul.credits {
   /* margin: auto; */
   /* mix-blend-mode: multiply; */
   display: flex;
+  perspective: 1000px;
   
   & > * {
     position: relative;
@@ -192,7 +227,7 @@ ul.credits {
   .logo-art {
     transform-origin: bottom left;
     transform: translate(var(--logo-art-shift-X), var(--logo-art-shift-Y)) rotate(var(--logo-art-angle));
-    z-index: -1;
+    /* z-index: -1; */
     opacity: 1;
     flex-basis: 30%;
     flex-shrink: 1;
@@ -207,8 +242,7 @@ ul.credits {
   }
   &.large {
     --logo-art-angle: var(--spinAngle);
-    animation: spin 1s infinite ease-in-out alternate;
-    perspective: 1000px;
+    animation: swing 1s infinite ease-in-out alternate;
     .logo-art {
       transform: translate(var(--logo-art-shift-X), var(--logo-art-shift-Y)) rotate3D(1,0,0,var(--logo-art-angle));
     }
@@ -302,15 +336,6 @@ ul.credits {
 }
 
 @keyframes swing {
-  from {
-    --spinAngle: 180deg;
-  }
-  to {
-    --spinAngle: 198deg;
-  }
-}
-
-@keyframes spin {
   from {
       --spinAngle: 20deg;
     }

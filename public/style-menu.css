@@ -107,7 +107,7 @@ main > section {
   height: 100dvh;
   overflow: auto;
   padding-top: var(--header-h);
-  padding-bottom: 3rem;
+  padding-bottom: var(--footer-h);
   visibility: hidden;
   transition: transform 0.5s ease-out;
 }

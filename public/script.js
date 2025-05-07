@@ -1,11 +1,12 @@
-// function addLogo (className) {
-//   /** @type HTMLTemplateElement | null */ const logo = document.querySelector("#logo-template")
-//   if (!logo) return
-//   const main = document.getElementsByTagName('main')[0] ?? document.body
-//   /** @type HTMLElement */ const clone = logo.content.cloneNode(true)
-//   clone.firstElementChild?.classList.add(className)
-//   main.prepend(clone)
-// }
+/** @typedef {CustomEvent<{isPlaying: boolean, videoId: string}>} VideoPlayToggledEvent */
+
+/**
+ * @type {{[key: string]: import("./vimeo-player").PlayerAPI}}
+ */
+export const videoPlayers = {}
+
+let globalMute = true
+let bgMute = true
 
 const impressumButton = document.getElementById('impressum-button')
 const impressum = document.getElementById('impressum')
@@ -24,10 +25,10 @@ if (impressumButton && impressum) {
   }
 }
 
-function clickOutside(element, excludeList, callback) {
-  document.addEventListener('click', function(event) {
-    if (!element.contains(event.target) && 
-        !excludeList.some(excluded => excluded.contains(event.target))) {
+function clickOutside (element, excludeList, callback) {
+  document.addEventListener('click', function (event) {
+    if (!element.contains(event.target) &&
+      !excludeList.some(excluded => excluded.contains(event.target))) {
       callback();
     }
   });
@@ -41,21 +42,26 @@ if (iframe) {
   iframe.style.opacity = '0'
 }
 // @ts-ignore
-const player = new Vimeo.Player(iframe);
+const bgPlayer = new Vimeo.Player(iframe);
 const muteToggleBtn = document.getElementById('unmute-btn');
 const playBtn = document.getElementById('play-btn');
 
 muteToggleBtn?.addEventListener('click', async () => {
   try {
-    const muted = await player.getMuted();
-    await player.setMuted(!muted);
-    updateMuteButtonState(!muted);
+    globalMute = !globalMute
+    if (!bgMute) {
+      await bgPlayer.setMuted(globalMute);
+    }
+    updateMuteButtonState(globalMute);
+    Object.values(videoPlayers).forEach(player => {
+      player.setMuted(globalMute);
+    });
   } catch (error) {
     console.error('Error toggling mute:', error);
   }
 });
 
-async function updateMuteButtonState(isMuted) {
+async function updateMuteButtonState (isMuted) {
   if (muteToggleBtn) {
     if (isMuted) {
       muteToggleBtn.classList.add('muted');
@@ -65,11 +71,12 @@ async function updateMuteButtonState(isMuted) {
   }
 }
 
-player.ready().then(async () => {
+bgPlayer.ready().then(async () => {
   if (iframe) iframe.style.opacity = '1';
   if (!isMobile) {
-    await player.setMuted(true);
-    await player.play();
+    bgMute = true
+    await bgPlayer.setMuted(bgMute);
+    await bgPlayer.play();
     if (playBtn) playBtn.style.display = 'none';
     showVolumeToggleButton();
   }
@@ -77,23 +84,36 @@ player.ready().then(async () => {
 
 // Check if it's a mobile device
 if (isMobile) {
-  player.pause();
+  bgPlayer.pause();
   if (muteToggleBtn) muteToggleBtn.style.display = 'none';
   if (playBtn) {
     playBtn.style.display = 'flex';
     playBtn.addEventListener('click', async () => {
-      await player.setMuted(false);
-      await player.play();
+      bgMute = false
+      await bgPlayer.setMuted(bgMute);
+      await bgPlayer.play();
       playBtn.style.display = 'none';
       showVolumeToggleButton();
     });
   }
 }
 
-async function showVolumeToggleButton() {
+async function showVolumeToggleButton () {
   if (muteToggleBtn) {
     muteToggleBtn.style.display = 'flex';
-    const muted = await player.getMuted();
+    const muted = await bgPlayer.getMuted();
     updateMuteButtonState(muted);
   }
 }
+
+// @ts-ignore
+window.addEventListener('video-play-toggled', async (/** @type {VideoPlayToggledEvent} */ event) => {
+  bgMute = event.detail.isPlaying
+  try {
+    if (!globalMute) {
+      await bgPlayer.setMuted(bgMute);
+    }
+  } catch (error) {
+    console.error('Error toggling mute:', error);
+  }
+})
