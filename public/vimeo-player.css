@@ -26,6 +26,8 @@
         background: var(--bg-color);
         width: 2.5rem;
         height: 2.5rem;
+        position: sticky;
+        bottom: 0;
 
         &:hover {
           background: color-mix(in lab, var(--bg-color), white 50%);
