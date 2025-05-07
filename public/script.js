@@ -27,9 +27,9 @@ function clickOutside (element, excludeList, callback) {
   document.addEventListener('click', function (event) {
     if (!element.contains(event.target) &&
       !excludeList.some(excluded => excluded.contains(event.target))) {
-      callback();
+      callback()
     }
-  });
+  })
 }
 // addLogo('small')
 // addLogo('large')
@@ -40,45 +40,45 @@ if (iframe) {
   iframe.style.opacity = '0'
 }
 // @ts-ignore
-const bgPlayer = new Vimeo.Player(iframe);
-const muteToggleBtn = document.getElementById('unmute-btn');
-const playBtn = document.getElementById('play-btn');
+const bgPlayer = new Vimeo.Player(iframe)
+const muteToggleBtn = document.getElementById('unmute-btn')
+const playBtn = document.getElementById('play-btn')
 
 muteToggleBtn?.addEventListener('click', async () => {
   try {
     globalMute = !globalMute
     if (!bgMute) {
-      await bgPlayer.setMuted(globalMute);
+      await bgPlayer.setMuted(globalMute)
     }
-    updateMuteButtonState(globalMute);
+    updateMuteButtonState(globalMute)
     Object.values(videoPlayers).forEach(player => {
-      player.setMuted(globalMute);
-    });
+      player.setMuted(globalMute)
+    })
   } catch (error) {
-    console.error('Error toggling mute:', error);
+    console.error('Error toggling mute:', error)
   }
-});
+})
 
 async function updateMuteButtonState (isMuted) {
   if (muteToggleBtn) {
     if (isMuted) {
-      muteToggleBtn.classList.add('muted');
+      muteToggleBtn.classList.add('muted')
     } else {
-      muteToggleBtn.classList.remove('muted');
+      muteToggleBtn.classList.remove('muted')
     }
   }
 }
 
 bgPlayer.ready().then(async () => {
-  if (iframe) iframe.style.opacity = '1';
+  if (iframe) iframe.style.opacity = '1'
   if (!isMobile) {
     bgMute = true
-    await bgPlayer.setMuted(bgMute);
-    await bgPlayer.play();
-    if (playBtn) playBtn.style.display = 'none';
-    showVolumeToggleButton();
+    await bgPlayer.setMuted(bgMute)
+    await bgPlayer.play()
+    if (playBtn) playBtn.style.display = 'none'
+    showVolumeToggleButton()
   }
-});
+})
 
 // Check if it's a mobile device
 if (isMobile) {
@@ -92,7 +92,7 @@ if (isMobile) {
       await bgPlayer.play()
       playBtn.style.display = 'none'
       showVolumeToggleButton()
-    });
+    })
   }
 }
 
@@ -108,7 +108,7 @@ window.addEventListener('video-play-toggled', async (/** @type {import('./vimeo-
   bgMute = event.detail.isPlaying
   try {
     if(event.detail.isPlaying) {
-     Object.entries(videoPlayers).forEach(([url, player]) => {
+      Object.entries(videoPlayers).forEach(([url, player]) => {
         if (url !== event.detail.url) {
           player.pause()
         }

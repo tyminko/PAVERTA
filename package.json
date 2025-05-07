@@ -1,0 +1,16 @@
+{
+  "name": "paverta",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint:js": "eslint . --ext .js",
+    "lint:js:fix": "eslint . --ext .js --fix",
+    "lint:html": "htmlhint \"**/*.html\"",
+    "lint": "npm run lint:js && npm run lint:html"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-plugin-html": "^8.1.2",
+    "htmlhint": "^1.1.4"
+  }
+}

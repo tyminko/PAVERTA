@@ -6,17 +6,16 @@ import { createVimeoPlayer } from './vimeo-player.js'
 import { videoPlayers } from './script.js'
 
 document.addEventListener('DOMContentLoaded', () => {
-  const menuToggle = document.querySelector('.menu-toggle')
-  const menuItems = document.querySelector('.menu-items')
+  const menuToggle = /** @type {HTMLElement} */ (document.querySelector('.menu-toggle'))
+  const menuItems = /** @type {HTMLElement} */ (document.querySelector('.menu-items'))
   const menuButtons = /** @type {NodeListOf<HTMLElement>} */ (document.querySelectorAll('.menu-item'))
-  const main = document.querySelector('main')
+  const main = /** @type {HTMLElement} */ (document.querySelector('main'))
   const sections = Array.from(main?.querySelectorAll('section') ?? [])
-  // /**
-  //  * @type {{[key: string]: PlayerAPI}}
-  //  */
-  // const videoPlayers = {}
 
   // Update menu toggle text based on active section
+  /**
+   * @param {number} activeIndex 
+   */
   function updateMenuToggleText (activeIndex) {
     const activeButton = menuButtons[activeIndex]
     const menuText = menuToggle?.querySelector('.text')
@@ -36,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   document.addEventListener('mousedown', (event) => {
-    const isClickInsideMenu = event.target?.closest('.section-menu')
+    const isClickInsideMenu = /** @type {HTMLElement} */ (event.target) ?.closest('.section-menu')
     if (!isClickInsideMenu && menuItems?.classList.contains('open')) {
       menuItems.classList.remove('open')
     }

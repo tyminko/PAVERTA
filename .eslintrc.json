@@ -1,0 +1,67 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "html"
+  ],
+  "rules": {
+    "semi": [
+      "error",
+      "never"
+    ],
+    "indent": [
+      "error",
+      2
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "no-unused-vars": "warn",
+    "no-console": "warn"
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.html"
+      ],
+      "rules": {
+        "indent": [
+          "error",
+          2,
+          {
+            "ignoredNodes": [
+              "TemplateLiteral"
+            ],
+            "SwitchCase": 1,
+            "outerIIFEBody": 1,
+            "MemberExpression": 1,
+            "FunctionDeclaration": {
+              "parameters": 1,
+              "body": 1
+            },
+            "FunctionExpression": {
+              "parameters": 1,
+              "body": 1
+            },
+            "CallExpression": {
+              "arguments": 1
+            },
+            "ArrayExpression": 1,
+            "ObjectExpression": 1,
+            "ImportDeclaration": 1,
+            "flatTernaryExpressions": false,
+            "ignoreComments": false
+          }
+        ]
+      }
+    }
+  ]
+}
