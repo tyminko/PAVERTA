@@ -1,0 +1,25 @@
+.media-view {
+  container-type: inline-size;
+
+  .v-player {
+    position: relative;
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: var(--aspect-ratio);
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      z-index: 1;
+    }
+  }
+}
