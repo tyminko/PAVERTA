@@ -5,6 +5,8 @@
 /** @type {any} */
 const Vimeo = window.Vimeo
 
+/** @typedef {CustomEvent<{isPlaying: boolean, url: string}>} VideoPlayToggledEvent */
+
 /**
  * @typedef {Object} Vimeo
  * @property {Function} Player - Vimeo Player constructor
@@ -82,8 +84,6 @@ export function createVimeoPlayer (container, url, options = {}) {
    * @param {Element} playerContainer
    */
   function init (playerContainer) {
-    const previewUrl = playerContainer.querySelector('img')?.src ?? playerOptions.previewUrl
-
     // Create controls container if needed
     if (showControls) {
       const controlsDiv = document.createElement('div')
@@ -110,7 +110,7 @@ export function createVimeoPlayer (container, url, options = {}) {
     }
 
     player = new Vimeo.Player(playerContainer, {
-      url: url,
+      url,
       controls: false,
       autoplay: playerOptions.autoplay,
       loop: true,
@@ -162,7 +162,7 @@ export function createVimeoPlayer (container, url, options = {}) {
     window.dispatchEvent(new CustomEvent('video-play-toggled', {
       detail: {
         isPlaying: state,
-        videoId: videoId
+        url
       }
     }))
   }

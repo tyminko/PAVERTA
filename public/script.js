@@ -1,5 +1,3 @@
-/** @typedef {CustomEvent<{isPlaying: boolean, videoId: string}>} VideoPlayToggledEvent */
-
 /**
  * @type {{[key: string]: import("./vimeo-player").PlayerAPI}}
  */
@@ -84,35 +82,42 @@ bgPlayer.ready().then(async () => {
 
 // Check if it's a mobile device
 if (isMobile) {
-  bgPlayer.pause();
-  if (muteToggleBtn) muteToggleBtn.style.display = 'none';
+  bgPlayer.pause()
+  if (muteToggleBtn) muteToggleBtn.style.display = 'none'
   if (playBtn) {
-    playBtn.style.display = 'flex';
+    playBtn.style.display = 'flex'
     playBtn.addEventListener('click', async () => {
       bgMute = false
-      await bgPlayer.setMuted(bgMute);
-      await bgPlayer.play();
-      playBtn.style.display = 'none';
-      showVolumeToggleButton();
+      await bgPlayer.setMuted(bgMute)
+      await bgPlayer.play()
+      playBtn.style.display = 'none'
+      showVolumeToggleButton()
     });
   }
 }
 
 async function showVolumeToggleButton () {
   if (muteToggleBtn) {
-    muteToggleBtn.style.display = 'flex';
-    const muted = await bgPlayer.getMuted();
-    updateMuteButtonState(muted);
+    muteToggleBtn.style.display = 'flex'
+    const muted = await bgPlayer.getMuted()
+    updateMuteButtonState(muted)
   }
 }
 // @ts-ignore
-window.addEventListener('video-play-toggled', async (/** @type {VideoPlayToggledEvent} */ event) => {
+window.addEventListener('video-play-toggled', async (/** @type {import('./vimeo-player').VideoPlayToggledEvent} */ event) => {
   bgMute = event.detail.isPlaying
   try {
+    if(event.detail.isPlaying) {
+     Object.entries(videoPlayers).forEach(([url, player]) => {
+        if (url !== event.detail.url) {
+          player.pause()
+        }
+      })
+    }
     if (!globalMute) {
-      await bgPlayer.setMuted(bgMute);
+      await bgPlayer.setMuted(bgMute)
     }
   } catch (error) {
-    console.error('Error toggling mute:', error);
+    console.error('Error toggling mute:', error)
   }
 })
