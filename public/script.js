@@ -113,6 +113,9 @@ window.addEventListener('video-play-toggled', async (/** @type {import('./vimeo-
           player.pause()
         }
       })
+      if (globalMute) {
+        globalMute = false
+      }
     }
     if (!globalMute) {
       await bgPlayer.setMuted(bgMute)

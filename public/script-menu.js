@@ -25,17 +25,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  /**
+   * Handle URL hash-based section switching
+   */
+  function handleHashChange () {
+    const hash = window.location.hash.slice(1) // Remove the # symbol
+    if (!hash) return
+
+    const sectionIndex = sections.findIndex(section =>
+      section.classList.contains(hash.toLowerCase())
+    )
+
+    if (sectionIndex !== -1) {
+      toggleSection(sectionIndex)
+    }
+  }
+
+  // Initial section setup
   sections[0].classList.add('active')
   checkSectionVideoPlayers(sections[0])
-
   updateMenuToggleText(0)
+
+  // Handle initial hash and hash changes
+  handleHashChange()
+  window.addEventListener('hashchange', handleHashChange)
 
   menuToggle?.addEventListener('click', () => {
     menuItems?.classList.toggle('open')
   })
 
   document.addEventListener('mousedown', (event) => {
-    const isClickInsideMenu = /** @type {HTMLElement} */ (event.target) ?.closest('.section-menu')
+    const isClickInsideMenu = /** @type {HTMLElement} */ (event.target)?.closest('.section-menu')
     if (!isClickInsideMenu && menuItems?.classList.contains('open')) {
       menuItems.classList.remove('open')
     }
@@ -57,6 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
     menuButtons.forEach((btn, i) => {
       btn.classList.toggle('active', i === index)
     })
+
+    // Update URL hash
+    const sectionClass = Array.from(targetSection.classList)
+      .find(cls => cls !== 'active' && cls !== 'section')
+    if (sectionClass) {
+      window.location.hash = sectionClass
+    }
 
     // Prepare target section
     targetSection.style.transition = 'none'
