@@ -4,7 +4,8 @@
 export const videoPlayers = {}
 
 let globalMute = true
-let bgMute = true
+let userUnmutedBgVideo = false
+let videoIsPlaying = false
 
 const impressumButton = document.getElementById('impressum-button')
 const impressum = document.getElementById('impressum')
@@ -45,18 +46,15 @@ const muteToggleBtn = document.getElementById('unmute-btn')
 const playBtn = document.getElementById('play-btn')
 
 muteToggleBtn?.addEventListener('click', async () => {
-  try {
-    globalMute = !globalMute
-    if (!bgMute) {
-      await bgPlayer.setMuted(globalMute)
-    }
-    updateMuteButtonState(globalMute)
-    Object.values(videoPlayers).forEach(player => {
-      player.setMuted(globalMute)
-    })
-  } catch (error) {
-    console.error('Error toggling mute:', error)
+  globalMute = !globalMute
+  if (!videoIsPlaying) {
+    userUnmutedBgVideo = !globalMute
+    await bgPlayer.setMuted(globalMute)
   }
+  updateMuteButtonState(globalMute)
+  Object.values(videoPlayers).forEach(player => {
+    player.setMuted(globalMute)
+  })
 })
 
 async function updateMuteButtonState (isMuted) {
@@ -72,8 +70,8 @@ async function updateMuteButtonState (isMuted) {
 bgPlayer.ready().then(async () => {
   if (iframe) iframe.style.opacity = '1'
   if (!isMobile) {
-    bgMute = true
-    await bgPlayer.setMuted(bgMute)
+    globalMute = true
+    await bgPlayer.setMuted(globalMute)
     await bgPlayer.play()
     if (playBtn) playBtn.style.display = 'none'
     showVolumeToggleButton()
@@ -87,8 +85,8 @@ if (isMobile) {
   if (playBtn) {
     playBtn.style.display = 'flex'
     playBtn.addEventListener('click', async () => {
-      bgMute = false
-      await bgPlayer.setMuted(bgMute)
+      globalMute = false
+      await bgPlayer.setMuted(globalMute)
       await bgPlayer.play()
       playBtn.style.display = 'none'
       showVolumeToggleButton()
@@ -105,22 +103,22 @@ async function showVolumeToggleButton () {
 }
 // @ts-ignore
 window.addEventListener('video-play-toggled', async (/** @type {import('./vimeo-player').VideoPlayToggledEvent} */ event) => {
-  bgMute = event.detail.isPlaying
-  try {
-    if(event.detail.isPlaying) {
-      Object.entries(videoPlayers).forEach(([url, player]) => {
-        if (url !== event.detail.url) {
-          player.pause()
-        }
-      })
-      if (globalMute) {
-        globalMute = false
+  videoIsPlaying = event.detail.isPlaying
+  if (videoIsPlaying) {
+    Object.entries(videoPlayers).forEach(([url, player]) => {
+      if (url !== url) {
+        player.pause()
       }
-    }
-    if (!globalMute) {
-      await bgPlayer.setMuted(bgMute)
-    }
-  } catch (error) {
-    console.error('Error toggling mute:', error)
+    })
+  }
+  if (videoIsPlaying) {
+    globalMute = false
+    updateMuteButtonState(globalMute)
+  } else {
+    globalMute = !userUnmutedBgVideo
+    updateMuteButtonState(globalMute)
+  }
+  if (userUnmutedBgVideo) {
+    await bgPlayer.setMuted(videoIsPlaying)
   }
 })

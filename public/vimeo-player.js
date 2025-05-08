@@ -172,6 +172,7 @@ export function createVimeoPlayer (container, url, options = {}) {
       player.pause()
     } else {
       player.play()
+      player.setMuted(false)
     }
   }
 
@@ -212,9 +213,9 @@ export function createVimeoPlayer (container, url, options = {}) {
     }
   }
 
-/**
- * @param {KeyboardEvent} e 
- */
+  /**
+   * @param {KeyboardEvent} e 
+   */
   function shortcuts (e) {
     if (e.key === ' ') {
       e.preventDefault()
@@ -229,7 +230,7 @@ export function createVimeoPlayer (container, url, options = {}) {
     pause: () => player.pause(),
     togglePlay,
     toggleMute,
-    setMuted: (muted) => player.setMuted(muted),
+    setMuted: (/** @type {boolean} */ muted) => player.setMuted(muted),
     getPlayer: () => player,
     addShortcuts: () => {
       window.addEventListener('keydown', shortcuts)
