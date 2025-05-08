@@ -140,6 +140,7 @@ section:not(:has(.grid)) {
 
   .card {
     width: auto;
+    height: fit-content;
   }
 }
 
