@@ -5,7 +5,7 @@ export const videoPlayers = {}
 
 let globalMute = true
 let userUnmutedBgVideo = false
-let videoIsPlaying = false
+let activePlayerId = ''
 
 const impressumButton = document.getElementById('impressum-button')
 const impressum = document.getElementById('impressum')
@@ -47,7 +47,7 @@ const playBtn = document.getElementById('play-btn')
 
 muteToggleBtn?.addEventListener('click', async () => {
   globalMute = !globalMute
-  if (!videoIsPlaying) {
+  if (!activePlayerId) {
     userUnmutedBgVideo = !globalMute
     await bgPlayer.setMuted(globalMute)
   }
@@ -103,15 +103,19 @@ async function showVolumeToggleButton () {
 }
 // @ts-ignore
 window.addEventListener('video-play-toggled', async (/** @type {import('./vimeo-player').VideoPlayToggledEvent} */ event) => {
-  videoIsPlaying = event.detail.isPlaying
-  if (videoIsPlaying) {
+  if (event.detail.isPlaying) {
+    activePlayerId = event.detail.url
     Object.entries(videoPlayers).forEach(([url, player]) => {
-      if (url !== url) {
+      if (url !== event.detail.url) {
         player.pause()
       }
     })
+  } else {
+    if (activePlayerId === event.detail.url) {
+      activePlayerId = ''
+    }
   }
-  if (videoIsPlaying) {
+  if (activePlayerId) {
     globalMute = false
     updateMuteButtonState(globalMute)
   } else {
@@ -119,6 +123,6 @@ window.addEventListener('video-play-toggled', async (/** @type {import('./vimeo-
     updateMuteButtonState(globalMute)
   }
   if (userUnmutedBgVideo) {
-    await bgPlayer.setMuted(videoIsPlaying)
+    await bgPlayer.setMuted(!!activePlayerId)
   }
 })
